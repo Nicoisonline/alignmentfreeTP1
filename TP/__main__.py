@@ -4,8 +4,14 @@ from TP.kmers import stream_kmers, kmer2str
 
 
 def jaccard(fileA, fileB, k):
+    """ Compute the Jaccard similarity between two files"""
     j = 0
     # --- To complete ---
+    kmersA = set(stream_kmers(fileA, k))
+    kmersB = set(stream_kmers(fileB, k))
+    intersection = kmersA.intersection(kmersB)
+    union = kmersA.union(kmersB)
+    j = len(intersection) / len(union)
     return j
 
 

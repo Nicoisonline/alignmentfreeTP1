@@ -16,5 +16,16 @@ def kmer2str(val, k):
 
 
 def stream_kmers(text, k):
+    """Aussi appelé enumerate_kmers"""
     # --- To complete ---
-    pass
+    mask = (1 << (2(k-1))) - 1
+    kmer = text[0:k-1]
+    for i in range(len(text) - (k - 1)):
+        yield kmer
+        kmer &= mask
+        kmer <<= 2
+        kmer += encode_nucl(text[i + k])
+
+def encode_nucl(nucl):
+    """ Encode a nucleotide into a 2-bits integer"""
+    return {'A': 0, 'C': 1, 'T': 2, 'G': 3}[nucl]
