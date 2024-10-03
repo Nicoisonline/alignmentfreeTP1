@@ -18,7 +18,7 @@ def kmer2str(val, k):
 def stream_kmers(text, k):
     """Aussi appelé enumerate_kmers"""
     # --- To complete ---
-    mask = (1 << (2(k-1))) - 1
+    mask = (1 << (2*(k-1))) - 1
     kmer = text[0:k-1]
     for i in range(len(text) - (k - 1)):
         yield kmer
