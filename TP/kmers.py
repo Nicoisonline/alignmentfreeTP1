@@ -15,7 +15,10 @@ def kmer2str(val, k):
     return "".join(str_val)
 
 def encode_kmer(text, k):
-    """Retourne l'encodage d'un k-mer sous forme d'entier."""
+    """ input:  text: 'str' sequence
+                k: 'int' taille de kmer
+        output: kmer: 'int' encodage du kmer
+        encode les kmer de str en int en utilisant les bits"""
     kmer = 0
     for letter in text[0:k]:
         kmer<<=2
@@ -23,7 +26,10 @@ def encode_kmer(text, k):
     return kmer
 
 def stream_kmers(text, k):
-    """Retourne un générateur de k-mers."""
+    """ input:  text: 'list' liste de sequences
+                k: 'int' taille de kmer
+        output: Generator[int] kmer produits
+        genere des kmer de taille k a partir de la sequence text"""
     text = text[0]
     mask = (1<<(2*(k-1)))-1
     kmer = encode_kmer(text,k)
@@ -38,15 +44,23 @@ def stream_kmers(text, k):
     yield min(kmer, kmer_inv)
 
 def encode_nucl(letter):
-    """Retourne l'encodage d'une lettre de nucléotide."""
+    """ input:   letter: 'str' nucleotide
+        output:  'int' codage du nucleotide
+        encode le nucleotide en int"""
     return {"A" : 0, "C" : 1, "T" : 2, "G" : 3}[letter]
 
+
 def rev_nuc(n) :
-    """Retourne le nucléotide complémentaire."""
+    """ input:   n: 'str' nucleotide
+        output:  'str' complementaire du nucleotide
+        encode le complementaire du nucleotide"""
     return {"A" : "T", "G": "C", "T": "A" , "C":"G"}[n]
 
-def encode_kmer_rev(kmer,k) :
-    """Retourne l'encodage du k-mer inverse.""" 
+def encode_kmer_rev(kmer,k) : 
+    """ input:  kmer: 'int' kmer encode
+                k: 'int' taille du kmer
+        output: kmer_inv: 'int' reverse complementaire encode
+        encode le reverse complementaire d'un kmer """
     kmer_inv = 0
     text = kmer2str(kmer,k)
     text_rev = text[::-1]
