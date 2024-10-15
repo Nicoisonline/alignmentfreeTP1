@@ -1,4 +1,4 @@
-
+import numpy as np
 def kmer2str(val, k):
     """ Transform a kmer integer into a its string representation
     :param int val: An integer representation of a kmer
@@ -35,13 +35,13 @@ def stream_kmers(text, k):
     kmer = encode_kmer(text,k)
     kmer_inv = encode_kmer_rev(kmer,k)
     for i in range(len(text)-(k)):
-        yield min(kmer, kmer_inv)
+        yield min(xorshift64(kmer), xorshift64(kmer_inv))
         kmer &= mask
         kmer <<= 2
         kmer_inv >>= 2
         kmer = kmer + encode_nucl(text[i+k])
         kmer_inv = (encode_nucl(rev_nuc(text[i+k]))<<(2*(k-1))) + kmer_inv
-    yield min(kmer, kmer_inv)
+    yield min(xorshift64(kmer), xorshift64(kmer_inv))
 
 def encode_nucl(letter):
     """ input:   letter: 'str' nucleotide
@@ -68,3 +68,22 @@ def encode_kmer_rev(kmer,k) :
         kmer_inv<<=2
         kmer_inv = kmer_inv + encode_nucl(rev_nuc(letter))
     return kmer_inv
+
+def xorshift64(val):
+    val ^= val << 13
+    val &= 0xFFFFFFFFFFFFFFFF
+    val ^= val >> 7
+    val ^= val << 17
+    val &= 0xFFFFFFFFFFFFFFFF
+    return val
+
+def min_hash(text,k,s):
+    kmers = [np.inf for k in range(s)]
+    max_el = np.inf
+    for km in stream_kmers(text,k):
+        if km < max_el:
+            indx = kmers.index(max_el)
+            kmers[indx] = km
+            max_el = max(kmers)
+    kmers.sort()
+    return kmers

@@ -1,5 +1,5 @@
 from TP.loading import load_directory
-from TP.kmers import stream_kmers, kmer2str
+from TP.kmers import stream_kmers, kmer2str, min_hash
 
 
 def compare_kmers(km1,km2):
@@ -26,6 +26,7 @@ def create_index(file, k):
             index[kmer] = 1
     return index
 
+'''
 def jaccard(fileA, fileB, k):
     """ input:  fileA : 'str' sequence 1
                 fileB : 'str' sequence 2
@@ -47,6 +48,32 @@ def jaccard(fileA, fileB, k):
         return 0
     jac = intersect/union
     return jac
+'''
+def jaccard(listefA, listefB, k, s):
+    """ input:  fileA : 'str' sequence 1
+                fileB : 'str' sequence 2
+                k : 'int' taille du kmer
+        output: jac: 'int' valeur jaccard
+        calcule la valeur jaccard entre deux séquences"""
+    jac = 0
+    intersect = 0
+    union = 0
+    cptA, cptB = 0, 0
+    while ((cptA < s) and (cptB < s)):
+        if listefA[cptA] == listefB[cptB]:
+            intersect += 1
+            union += 1
+            cptA += 1
+            cptB += 1
+        elif listefA[cptA] > listefB[cptB]:
+            union += 1
+            cptB += 1
+        elif listefA[cptA] < listefB[cptB]:
+            union += 1
+            cptA += 1
+    union += len(listefA[cptA:-1]) + len(listefB[cptB:-1])
+    jac = intersect/union
+    return jac
 
 
 if __name__ == "__main__":
@@ -60,11 +87,14 @@ if __name__ == "__main__":
     filenames = list(files.keys())
 
     for i in range(len(files)):
+        listefA = min_hash(files[filenames[i]],k,10000)
         for j in range(i+1, len(files)):
             p = files[filenames[j]]
             if len(p) > 1:
                 for l in range (1,len(p),1):
                     m = [p[0]]
                     m = [m[0] + p[l]]
-            jac = jaccard(files[filenames[i]], p, k)
+                p = m
+            listefB = min_hash(p,k,10000)
+            jac = jaccard(listefA, listefB, k, 10000)
             print(filenames[i], filenames[j], jac)
