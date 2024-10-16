@@ -48,6 +48,8 @@ Néanmoins, on observe que l'ordre de grandeur des valeurs est similaire, ce qui
 
 ## Description des méthodes :
 
+Le but est de repartir du code de la semaine dernière et de l'optimiser. Pour ce faire, nous utilisons une méthode de hachage afin de déterminer l'union et l'intersection en comparant des listes de taille s des plus petits k-mers. L'objectif est de réduire le nombre d'éléments comparés. Pour ce faire, `stream_kmer` ne génère plus des k-mers encodés en int, mais utilise la fonction `xorshift`. La fonction `min_hash` permet de créer les listes de taille s des plus petits k-mers générés par `xorshift`, triés par ordre croissant. Enfin, dans la fonction `jaccard`, nous comparons maintenant les listes pour les fichiers A et B. Dans cette comparaison, la position du k-mer est importante car elle indique s'il y a une intersection et/ou une union. Nous calculons ensuite la valeur de Jaccard et construisons la matrice.
+
 # Concernant les génomes Humain, souris et singe : 
 
 La taille conséquente et le format des génomes humain, souris et singe ne nous permettent pas de les traiter de la même manière que les génomes bactériens. En effet, les génomes bactériens sont plus petits et plus simples, ce qui permet de les traiter plus rapidement. Pour ces génomes, il n'a pas été possible de calculer la matrice des distances, car cela prenait trop de temps, sans compter les difficultés liées aux données.
