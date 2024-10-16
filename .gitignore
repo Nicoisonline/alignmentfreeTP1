@@ -1,5 +1,6 @@
 .register
 data/
 logs/
+data_all/
 
 **/__pycache__/

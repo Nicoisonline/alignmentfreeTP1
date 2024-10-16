@@ -80,14 +80,14 @@ if __name__ == "__main__":
     print("Computation of Jaccard similarity between files")
 
     # Load all the files in a dictionary
-    files = load_directory("data")
+    files = load_directory("data_all")
     k = 21
 
     print("Computing Jaccard similarity for all pairs of samples")
     filenames = list(files.keys())
 
     for i in range(len(files)):
-        listefA = min_hash(files[filenames[i]],k,10000)
+        listefA = min_hash(files[filenames[i]],k,1000)
         for j in range(i+1, len(files)):
             p = files[filenames[j]]
             if len(p) > 1:
@@ -95,6 +95,6 @@ if __name__ == "__main__":
                     m = [p[0]]
                     m = [m[0] + p[l]]
                 p = m
-            listefB = min_hash(p,k,10000)
-            jac = jaccard(listefA, listefB, k, 10000)
+            listefB = min_hash(p,k,1000)
+            jac = jaccard(listefA, listefB, k, 1000)
             print(filenames[i], filenames[j], jac)
