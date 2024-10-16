@@ -53,3 +53,5 @@ Le but est de repartir du code de la semaine dernière et de l'optimiser. Pour c
 # Concernant les génomes Humain, souris et singe : 
 
 La taille conséquente et le format des génomes humain, souris et singe ne nous permettent pas de les traiter de la même manière que les génomes bactériens. En effet, les génomes bactériens sont plus petits et plus simples, ce qui permet de les traiter plus rapidement. Pour ces génomes, il n'a pas été possible de calculer la matrice des distances, car cela prenait trop de temps, sans compter les difficultés liées aux données.
+
+En effet, le site NCBI semble avoir des problèmes dans le téléchargement des données, les zip sont corrompues. En utilisant le lien FTP, nous avons pu obtenir certaines données, néanmoins, le formatage et la taille de ces fichiers ne nous permettent pas de les traiter de la même manière que les génomes bactériens, malgré toutes nos tentatives pour les adapter. Il a été pour nous impossible d'extraire les séquences des génomes humain, souris et singe pour les traiter avec notre code.
