@@ -80,7 +80,7 @@ if __name__ == "__main__":
     print("Computation of Jaccard similarity between files")
 
     # Load all the files in a dictionary
-    files = load_directory("data_all")
+    files = load_directory("data")
     k = 21
 
     print("Computing Jaccard similarity for all pairs of samples")
